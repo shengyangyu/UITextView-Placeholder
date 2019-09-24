@@ -96,16 +96,16 @@
 - (UITextView *)placeholderTextView {
     UITextView *textView = objc_getAssociatedObject(self, @selector(placeholderTextView));
     if (!textView) {
-        NSAttributedString *originalText = self.attributedText;
-        self.text = @" "; // lazily set font of `UITextView`.
-        self.attributedText = originalText;
-
         textView = [[UITextView alloc] init];
         textView.backgroundColor = [UIColor clearColor];
         textView.textColor = [self.class defaultPlaceholderColor];
         textView.userInteractionEnabled = NO;
         textView.isAccessibilityElement = NO;
         objc_setAssociatedObject(self, @selector(placeholderTextView), textView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        
+        NSAttributedString *originalText = self.attributedText;
+        self.text = @" "; // lazily set font of `UITextView`.
+        self.attributedText = originalText;
 
         self.needsUpdateFont = YES;
         [self updatePlaceholderTextView];
